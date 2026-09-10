@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What is the college timing?",
+    "answer": "College hours are Monday to Saturday, 8:00 AM to 2:00 PM."
+  },
+  {
+    "question": "How do I contact the administration office?",
+    "answer": "You can reach the administration office at admin@example.edu or call the front desk during college hours."
+  },
+  {
+    "question": "What documents are required for admission?",
+    "answer": "You'll need your previous mark sheets, a transfer certificate, an ID proof, and passport-size photographs."
+  },
+  {
+    "question": "Where can I check my exam results?",
+    "answer": "Exam results are published on the official college portal under the 'Results' section."
+  },
+  {
+    "question": "How do I apply for a leave of absence?",
+    "answer": "Submit a leave application to your class coordinator with a reason and supporting documents, if any."
+  },
+  {
+    "question": "What is the fee payment deadline?",
+    "answer": "Fee payment deadlines are announced each semester on the notice board and college portal."
+  }
+]
