@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARLO | AI Assistant</title>
+    <meta name="description" content="ARLO is a student-focused AI assistant for chat, FAQs, study help, notes and planning." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="brand-wrap">
+          <div class="brand-mark">A</div>
+          <div class="brand-text">
+            <strong>ARLO</strong>
+            <span>AI Assistant</span>
+          </div>
+        </div>
+
+        <button class="primary-btn new-chat-btn" id="newChatBtn" type="button">+ New Chat</button>
+
+        <nav class="nav-list" aria-label="ARLO modules">
+          <button class="nav-item active" data-module="aichat" type="button">
+            <span aria-hidden="true">💬</span>
+            <span>AI Chat</span>
+          </button>
+          <button class="nav-item" data-module="faq" type="button">
+            <span aria-hidden="true">❓</span>
+            <span>FAQ Assistant</span>
+          </button>
+          <button class="nav-item" data-module="calculator" type="button">
+            <span aria-hidden="true">🧮</span>
+            <span>Calculator</span>
+          </button>
+          <button class="nav-item" data-module="study" type="button">
+            <span aria-hidden="true">📚</span>
+            <span>Study Help</span>
+          </button>
+          <button class="nav-item" data-module="notes" type="button">
+            <span aria-hidden="true">📝</span>
+            <span>Notes</span>
+          </button>
+          <button class="nav-item" data-module="planner" type="button">
+            <span aria-hidden="true">📅</span>
+            <span>Planner</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-lower">
+          <button class="settings-link" id="settingsBtn" type="button">⚙ Settings</button>
+          <button class="settings-link" id="aboutBtn" type="button">ℹ About ARLO</button>
+        </div>
+
+        <div class="user-strip">
+          <div class="avatar-mini">A</div>
+          <div>
+            <strong>ARLO User</strong>
+            <small>Student mode</small>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <section class="welcome-screen visible" id="welcomeScreen" aria-label="ARLO welcome screen">
+          <div class="welcome-card">
+            <div class="welcome-mark">A</div>
+            <p class="eyebrow">Your intelligent AI assistant</p>
+            <h1>Hi, I'm ARLO</h1>
+            <p class="welcome-copy">Ask me anything, study smarter, plan your day, or check a quick FAQ.</p>
+
+            <div class="suggestion-grid">
+              <button class="suggestion-card" type="button" data-prompt="Explain Python to a beginner.">💡 Explain something</button>
+              <button class="suggestion-card" type="button" data-prompt="Help me prepare for my CS exam.">📚 Help me study</button>
+              <button class="suggestion-card" type="button" data-prompt="89 + 78">🧮 Solve a calculation</button>
+              <button class="suggestion-card" type="button" data-prompt="What is the college timing?">❓ Ask about college</button>
+              <button class="suggestion-card" type="button" data-prompt="Create a quick note for my Java revision.">📝 Create a note</button>
+              <button class="suggestion-card" type="button" data-prompt="Plan my day with study and revision.">🗓️ Plan my day</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="chat-panel" id="chatPanel" aria-label="Chat area">
+          <header class="panel-header">
+            <div class="panel-title" id="chatTitle">AI Chat</div>
+            <button class="ghost-btn" id="clearChatBtn" type="button">Clear Chat</button>
+          </header>
+
+          <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+
+          <div class="composer">
+            <textarea id="messageInput" rows="1" aria-label="Message input" placeholder="Ask ARLO anything..."></textarea>
+            <button id="sendBtn" class="send-btn" type="button" aria-label="Send message">➤</button>
+          </div>
+        </section>
+
+        <section class="module-panel" id="notesPanel" aria-label="Notes panel">
+          <header class="panel-header">
+            <div class="panel-title">Notes</div>
+          </header>
+          <div class="panel-form-row">
+            <input id="noteInput" type="text" placeholder="Write a note..." aria-label="Add a note" />
+            <button id="addNoteBtn" class="primary-btn small" type="button">Add</button>
+          </div>
+          <div class="panel-list" id="notesList"></div>
+        </section>
+
+        <section class="module-panel" id="plannerPanel" aria-label="Planner panel">
+          <header class="panel-header">
+            <div class="panel-title">Planner</div>
+          </header>
+          <div class="panel-form-row">
+            <input id="taskInput" type="text" placeholder="Add a task..." aria-label="Add a task" />
+            <button id="addTaskBtn" class="primary-btn small" type="button">Add</button>
+          </div>
+          <div class="panel-list" id="plannerList"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal hidden" id="settingsModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="modal-header">
+          <h2 id="settingsTitle">Settings</h2>
+          <button class="close-btn" data-close="settings" type="button" aria-label="Close settings">✕</button>
+        </div>
+
+        <div class="settings-group">
+          <h3>Appearance</h3>
+          <div class="segmented">
+            <button class="seg-btn active" data-theme="light" type="button">Light</button>
+            <button class="seg-btn" data-theme="dark" type="button">Dark</button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Chat preferences</h3>
+          <label class="toggle-row">
+            <span>Enter to send</span>
+            <input type="checkbox" id="enterToSend" checked />
+          </label>
+          <label class="toggle-row">
+            <span>Show timestamps</span>
+            <input type="checkbox" id="showTimestamps" />
+          </label>
+        </div>
+
+        <div class="settings-group">
+          <h3>About ARLO</h3>
+          <p class="muted">ARLO version: 2.0</p>
+          <p class="muted">Student-focused local assistant for quick answers, study help, planning, and everyday tasks.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="aboutModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+        <div class="modal-header">
+          <h2 id="aboutTitle">About ARLO</h2>
+          <button class="close-btn" data-close="about" type="button" aria-label="Close about">✕</button>
+        </div>
+
+        <div class="about-content">
+          <p><strong>ARLO</strong> is a student-focused AI assistant designed to help with everyday questions, college FAQs, calculations, study support, notes and planning.</p>
+          <h3>Features</h3>
+          <ul>
+            <li>AI chat and study support</li>
+            <li>FAQ and college information lookup</li>
+            <li>Calculator and date/time responses</li>
+            <li>Notes and planner tools</li>
+            <li>Dark and light mode</li>
+          </ul>
+          <h3>Technology used</h3>
+          <p>Flask, Python, HTML, CSS, JavaScript, and local FAQ-based study logic.</p>
+          <h3>Privacy note</h3>
+          <p>ARLO works without any external AI account or paid API. Everything runs locally on the server.</p>
+          <h3>Developer</h3>
+          <p>Developed by Akanksha Jadhav</p>
+          <p>TYBSc Computer Science Student</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
